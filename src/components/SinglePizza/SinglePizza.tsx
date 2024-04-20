@@ -1,34 +1,21 @@
-import React, {FC} from 'react';
+import React, {FC, useState} from 'react';
 import Pizza from "../../models/Pizza";
 import { MdEdit, MdDelete } from "react-icons/md";
+import EditPizzaForm from "../EditPizzaForm/EditPizzaForm";
 
 interface SinglePizzaProps  {
-    pizza: Pizza
+    pizza: Pizza,
+    updatePizza: (newPizza: Pizza) => void
 }
 
-const nominals = [50, 100, 200,500,1000,2000,5000]
-
-function atm (amount: number, nominals: number[]):string[] {
-    const result: string[] = []
-    let remainder = amount
-
-    for (let i = nominals.length - 1; i >= 0; i--) {
-        const quantity = Math.floor(remainder / nominals[i])
-        remainder = remainder % nominals[i];
-
-        if(quantity > 0){
-            result.push(`${nominals[i]}x${quantity}`)
-        }
 
 
-        if (remainder === 0) {
-            break;
-        }
+const SinglePizza: FC<SinglePizzaProps> = ({pizza,updatePizza}) => {
+    const [edit, setEdit] = useState<boolean>(false)
+
+    const handleToggleEdit = () => {
+        setEdit(prevState => !prevState)
     }
-    return result
-}
-
-const SinglePizza: FC<SinglePizzaProps> = ({pizza}) => {
     return (
         <div className={'pizza'}>
             <img src={`images/${pizza.img}`} alt=""/>
@@ -36,12 +23,10 @@ const SinglePizza: FC<SinglePizzaProps> = ({pizza}) => {
             <span className={'price'}>{pizza.price} $</span>
 
             <div className="pizzas-controls">
-                <MdEdit/>
+                <MdEdit onClick={handleToggleEdit}/>
                 <MdDelete/>
             </div>
-            {atm(5350, nominals)}
-            <br/>
-            {atm(1200, nominals)}
+            {edit ? <EditPizzaForm handleToggleEdit={handleToggleEdit} updatePizza={updatePizza} data={pizza}/> : null}
         </div>
     );
 };

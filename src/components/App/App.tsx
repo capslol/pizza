@@ -24,12 +24,14 @@ const App: FC = () => {
     const addPizza = (newPizza: Pizza) => {
         setPizzasList([...pizzasList, newPizza])
     }
-    console.log(pizzasList)
+    const updatePizza = (newPizza: Pizza) => {
+        setPizzasList(pizzasList.map((pizza) => (pizza.id === newPizza.id ? newPizza : pizza)))
+    }
     return (
         <div className="App">
             <span>Hello pizza</span>
             <AddPizzaForm addPizza={addPizza}></AddPizzaForm>
-            <DisplayPizzas pizzasList={pizzasList}></DisplayPizzas>
+            <DisplayPizzas updatePizza={updatePizza} pizzasList={pizzasList}/>
         </div>
     )
 }
