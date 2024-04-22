@@ -6,11 +6,12 @@ import EditPizzaForm from "../EditPizzaForm/EditPizzaForm";
 interface SinglePizzaProps  {
     pizza: Pizza,
     updatePizza: (newPizza: Pizza) => void
+    deletePizza: (deletedPizza: Pizza) => void
 }
 
 
 
-const SinglePizza: FC<SinglePizzaProps> = ({pizza,updatePizza}) => {
+const SinglePizza: FC<SinglePizzaProps> = ({pizza,updatePizza, deletePizza}) => {
     const [edit, setEdit] = useState<boolean>(false)
 
     const handleToggleEdit = () => {
@@ -24,7 +25,7 @@ const SinglePizza: FC<SinglePizzaProps> = ({pizza,updatePizza}) => {
 
             <div className="pizzas-controls">
                 <MdEdit onClick={handleToggleEdit}/>
-                <MdDelete/>
+                <MdDelete onClick={()=> deletePizza(pizza)}/>
             </div>
             {edit ? <EditPizzaForm handleToggleEdit={handleToggleEdit} updatePizza={updatePizza} data={pizza}/> : null}
         </div>

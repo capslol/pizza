@@ -7,10 +7,10 @@ import pizza from "../../models/Pizza";
 interface DisplayPizzasProps  {
     pizzasList: Pizza[],
     updatePizza: (newPizza: Pizza) => void
-
+    deletePizza: (deletedPizza: Pizza) => void
 }
 
-const DisplayPizzas: FC<DisplayPizzasProps> = ({pizzasList,updatePizza}) => {
+const DisplayPizzas: FC<DisplayPizzasProps> = ({pizzasList,updatePizza, deletePizza}) => {
     return (
         <div>
             {pizzasList.map((pizza) => {
@@ -18,6 +18,7 @@ const DisplayPizzas: FC<DisplayPizzasProps> = ({pizzasList,updatePizza}) => {
                     key={pizza.id}
                     pizza={pizza}
                     updatePizza={updatePizza}
+                    deletePizza={deletePizza}
                 />
             })}
         </div>
